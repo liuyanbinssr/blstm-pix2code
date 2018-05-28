@@ -29,7 +29,6 @@ else:
     trained_weights_path = argv[0]
     trained_model_name = argv[1]
     input_path = argv[2]
-    input_path2 = argv[3]
 
 
 meta_dataset = np.load("{}/meta_dataset.npy".format(trained_weights_path))
@@ -41,14 +40,10 @@ model.load(trained_model_name)
 dataset = Dataset()
 dataset.load(input_path, generate_binary_sequences=True)
 
-input_images, partial_sequences, next_words = dataset.convert_arrays()
 
-size = len(dataset.input_images)
-
-print("size",size)
 
 model.compile()
-score = model.evaluate(input_images, partial_sequences, next_words)
+score = model.minevaluate(dataset)
 print("accuracy:",score)
 #print("size:",size)
 #print(Y.shape)
